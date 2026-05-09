@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Auth Section -->
+        <div id="auth-section" class="auth-container">
+            <div class="auth-form">
+                <h2>Task Management System</h2>
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('login')">Login</button>
+                    <button class="tab-btn" onclick="showTab('register')">Register</button>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="login-form" class="form-container">
+                    <input type="text" id="login-username" placeholder="Username" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button onclick="login()">Login</button>
+                </div>
+                
+                <!-- Register Form -->
+                <div id="register-form" class="form-container" style="display:none;">
+                    <input type="text" id="reg-username" placeholder="Username" required>
+                    <input type="email" id="reg-email" placeholder="Email" required>
+                    <input type="password" id="reg-password" placeholder="Password" required>
+                    <button onclick="register()">Register</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main App Section -->
+        <div id="main-app" style="display:none;">
+            <div class="header">
+                <h1>Task Manager</h1>
+                <div class="user-info">
+                    <span id="username-display"></span>
+                    <button onclick="logout()" class="logout-btn">Logout</button>
+                </div>
+            </div>
+            
+            <!-- Add Task Form -->
+            <div class="add-task-form">
+                <h3>Add New Task</h3>
+                <input type="text" id="task-title" placeholder="Task Title" required>
+                <textarea id="task-desc" placeholder="Description"></textarea>
+                <select id="task-priority">
+                    <option value="Low">Low Priority</option>
+                    <option value="Medium" selected>Medium Priority</option>
+                    <option value="High">High Priority</option>
+                </select>
+                <button onclick="addTask()">Add Task</button>
+            </div>
+            
+            <!-- Analytics Dashboard -->
+            <div class="analytics-dashboard">
+                <h3>Analytics Dashboard</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Total Tasks</h4>
+                        <p id="total-tasks">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Completed</h4>
+                        <p id="completed-tasks">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Pending</h4>
+                        <p id="pending-tasks">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Completion Rate</h4>
+                        <p id="completion-rate">0%</p>
+                    </div>
+                </div>
+                <div id="priority-breakdown" class="breakdown"></div>
+            </div>
+            
+            <!-- Tasks List -->
+            <div class="tasks-container">
+                <h3>My Tasks</h3>
+                <div id="tasks-list" class="tasks-list"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
